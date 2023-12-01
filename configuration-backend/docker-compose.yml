@@ -1,0 +1,17 @@
+version: '3.9'
+name: configuration
+services:
+
+  configuration:
+    image: configuration:${CONFIGURATION-VERSION}
+    container_name: configuration
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "6000:6000"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

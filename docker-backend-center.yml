@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  spring-admin:
+    image: mkrezka/spring-admin-backend:latest
+    container_name: spring-admin
+    ports:
+      - "9020:9020"
+    networks:
+      - mk
+  auth-backend:
+    image: mkrezka/auth-backend:latest
+    container_name: auth-backend
+    depends_on:
+      - spring-admin
+    ports:
+      - "9010:9010"
+    networks:
+      - mk
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES}
+      SPRING_BOOT_ADMIN_CLIENT_URL: ${SPRING_BOOT_ADMIN_URL}
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: ${EUREKA_CLIENT_URL}
+  gateway:
+    image: mkrezka/gateway-backend:latest
+    container_name: gateway-backend
+    depends_on:
+      - auth-backend
+    ports:
+      - "9000:9000"
+    networks:
+      - mk
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES}
+      AUTH_SERVER: ${AUTH_SERVER}
+networks:
+  mk:
+    external: true

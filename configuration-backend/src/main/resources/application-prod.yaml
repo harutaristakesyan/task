@@ -1,0 +1,43 @@
+spring:
+  kafka:
+    bootstrap-servers: http://31.172.67.136:29092
+    producer:
+      properties:
+        ack: all
+        retries: 0
+        batch-size: 16384
+        linger.ms: 1
+        buffer.memory: 16777216
+        key.serializer: org.apache.kafka.common.serialization.StringSerializer
+        schema.registry.url: http://31.172.67.136:9095
+        value.serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: configuration
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "kafka.models.*"
+        ack: all
+        retries: 0
+        batch-size: 16384
+        linger.ms: 1
+        buffer.memory: 16777216
+        schema.registry.url: http://31.172.67.136:9095
+  flyway:
+    schemas: configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/configuration
+    username: postgres
+    password: PassW@RD1
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        default_schema: configuration
+      open-in-view: false
+logging:
+  file:
+    name: configuration.log
+mail:
+  from: admin@prod.ru
+  to: admin@prod.ru

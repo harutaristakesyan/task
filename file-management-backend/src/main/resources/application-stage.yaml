@@ -1,0 +1,17 @@
+spring:
+  boot:
+    admin:
+      client:
+        url: http://31.172.76.230:9020/api/spring/admin
+  datasource:
+    url: jdbc:postgresql://31.172.76.230:5432/web
+    username: postgres
+    password: PassW@RD1
+    driver-class-name: org.postgresql.Driver
+logging:
+  file:
+    name: file-management.log
+eureka:
+  client:
+    service-url:
+      defaultZone: http://Admin:i4z5ccfPGux7jWB8@31.172.76.230:9020/api/spring/eureka/

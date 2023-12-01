@@ -1,0 +1,72 @@
+# Java Gradle CircleCI 2.0 configuration file
+# See: https://circleci.com/docs/2.0/language-java/
+version: 2.1
+jobs:
+  build:
+    machine:
+      image: ubuntu-2204:2022.10.2
+    working_directory: ~/spring-admin-backend
+    steps:
+      - checkout
+      - run: chmod +x ./gradlew
+      - run:
+          name: Build
+          command: |
+            ./gradlew clean bootJar -x test;
+      - persist_to_workspace:
+          root: build/libs
+          paths:
+            - spring-admin-backend*.jar
+
+  test:
+    machine:
+      image: ubuntu-2204:2022.10.2
+    steps:
+      - checkout
+      - run:
+          name: list directory
+          command: ls
+  deploy:
+    docker:
+      - image: cimg/base:2022.06
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+      - attach_workspace:
+          at: build/libs
+      - run:
+          name: Publish docker image
+          command: |
+            docker build . --tag $DOCKER_REGISTRY/spring-admin-backend
+            echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+            docker push $DOCKER_REGISTRY/spring-admin-backend
+      - run:
+          name: Ping Portainer
+          command: curl --insecure -X POST https://www.portainer.mkrezka.ru/api/webhooks/c166e714-b3d9-4780-8c24-07a14ba75c24
+workflows:
+  spring-admin-backend-wf:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - hold:
+          type: approval
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          requires:
+            - hold
+          filters:
+            branches:
+              only:
+                - master

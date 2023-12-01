@@ -1,0 +1,78 @@
+# Java Gradle CircleCI 2.0 configuration file
+# See: https://circleci.com/docs/2.0/language-java/
+version: 2.1
+jobs:
+  build:
+    machine:
+      image: ubuntu-2204:2023.02.1
+    resource_class: medium
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - gradle-shared-cache
+      - run:
+          name: Build
+          command: ./gradlew bootJar -x test;
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-shared-cache
+      - persist_to_workspace:
+          root: build/libs
+          paths:
+            - web-backend*.jar
+  test:
+    docker:
+      - image: cimg/openjdk:19.0.2
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          name: list directory
+          command: ls
+  deploy:
+    docker:
+      - image: cimg/base:2022.06
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASSWORD
+    resource_class: small
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+      - attach_workspace:
+          at: build/libs
+      - run:
+          name: Publish docker image
+          command: |
+            docker build . --tag $DOCKER_REGISTRY/web-backend
+            echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+            docker push $DOCKER_REGISTRY/web-backend
+      - run:
+          name: Ping Portainer
+          command: curl --insecure -X POST https://www.portainer.mkrezka.ru/api/webhooks/e23776f3-3ff4-4ef7-9ccc-f9fe9edd7184
+workflows:
+  web-backend-wf:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - hold:
+          type: approval
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          requires:
+            - hold
+          filters:
+            branches:
+              only:
+                - master

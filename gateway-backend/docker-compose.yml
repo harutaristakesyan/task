@@ -1,0 +1,19 @@
+version: '3.9'
+name: gateway
+services:
+
+  gateway:
+    image: gateway:${GATEWAY-VERSION}
+    container_name: gateway
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+    networks:
+      - backend
+    environment:
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin:9020/api/spring/admin
+
+networks:
+  backend:
+    driver: bridge

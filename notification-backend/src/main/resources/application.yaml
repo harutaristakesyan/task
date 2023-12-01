@@ -1,0 +1,12 @@
+server:
+  port: 6020
+  servlet:
+    context-path: /api/notification
+    application-display-name: notification
+spring:
+  application:
+    name: notification
+  sendgrid:
+    api-key: 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
+  profiles:
+    include: discovery

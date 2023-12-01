@@ -1,0 +1,25 @@
+server:
+  port: 7010
+  servlet:
+    context-path: /api/web
+    application-display-name: web
+
+spring:
+  application:
+    name: web
+  profiles:
+    active: dev
+    include: discovery
+
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  api-docs:
+    version: openapi_3_0
+
+mail:
+  from: mkrezka-web@mekrezka.com
+  to: harut.aristakesyan@gmail.com
+external:
+  api:
+    file-management: http://localhost:6030/api/file-management/images/

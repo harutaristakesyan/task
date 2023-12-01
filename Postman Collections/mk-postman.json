@@ -1,0 +1,877 @@
+{
+	"info": {
+		"_postman_id": "c5d7234c-5e03-4cc3-872f-56299f0a57f4",
+		"name": "MkRezka",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "web",
+			"item": [
+				{
+					"name": "amenities",
+					"item": [
+						{
+							"name": "get-all",
+							"id": "7d16ad5d-9c09-442b-aaa5-d269894f9234",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base-ip}}:{{web-backend}}/amenities"
+							},
+							"response": []
+						}
+					],
+					"id": "6dc88abd-e415-4196-bde7-f8305a1bb273"
+				},
+				{
+					"name": "answers",
+					"item": [
+						{
+							"name": "get-all-by-question-id",
+							"id": "cf7eefa3-cc9d-49ba-b653-375ddf2c5968",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-ip}}:{{web-backend}}/answers/by-question/:questionId",
+									"host": [
+										"{{base-ip}}"
+									],
+									"port": "{{web-backend}}",
+									"path": [
+										"answers",
+										"by-question",
+										":questionId"
+									],
+									"variable": [
+										{
+											"key": "questionId",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "3487f2e7-f49a-4e98-9978-0117fe752cff"
+				},
+				{
+					"name": "benefits",
+					"item": [
+						{
+							"name": "get-all",
+							"id": "826b3228-a6b9-4d38-956e-846c50058231",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base-ip}}:{{web-backend}}/benefits"
+							},
+							"response": []
+						}
+					],
+					"id": "b6e9d7e4-05a8-4711-855a-b3b5e4666ec2"
+				},
+				{
+					"name": "contacts",
+					"item": [
+						{
+							"name": "get-all",
+							"id": "bc48d027-8476-41cf-b5eb-56feda3aff48",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base-ip}}:{{web-backend}}/contacts"
+							},
+							"response": []
+						}
+					],
+					"id": "3ab6d78a-e9ce-4ba0-9079-4a8bbf0fed72"
+				},
+				{
+					"name": "files",
+					"item": [
+						{
+							"name": "get-by-id",
+							"id": "bbbe9a33-6d7f-4b10-a8cf-4b5397ca87c4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-ip}}:{{web-backend}}/files/:id",
+									"host": [
+										"{{base-ip}}"
+									],
+									"port": "{{web-backend}}",
+									"path": [
+										"files",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "0d503c01-eb14-44c8-9267-25d01519495c"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"id": "0a244fb3-7357-4812-8462-20e790729771",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/harut/Downloads/test2.jpg"
+										}
+									]
+								},
+								"url": "{{base-ip}}:{{web-backend}}/files"
+							},
+							"response": []
+						},
+						{
+							"name": "get-by-filename",
+							"id": "7f1ecf2b-1b70-41e2-82d9-acfc72749d4f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-ip}}:{{file-management-backend}}/images?fileName=web/520464249test2.jpg",
+									"host": [
+										"{{base-ip}}"
+									],
+									"port": "{{file-management-backend}}",
+									"path": [
+										"images"
+									],
+									"query": [
+										{
+											"key": "fileName",
+											"value": "web/520464249test2.jpg"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "19560ece-2a51-489e-a9f6-05ba101fdddc"
+				},
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "add",
+							"id": "7556a06d-b2b8-4b2c-a401-63799f4083a7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"{{$randomUserName}}\",\r\n    \"phoneNumber\": \"{{$randomPhoneNumber}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{web-backend}}/orders"
+							},
+							"response": []
+						}
+					],
+					"id": "1418e577-e930-424d-a4a5-dc05cfb1548d"
+				},
+				{
+					"name": "questions",
+					"item": [
+						{
+							"name": "get-all",
+							"id": "e4e76aca-e226-42d4-9369-79c606ba9586",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base-ip}}:{{web-backend}}/questions"
+							},
+							"response": []
+						}
+					],
+					"id": "753daaa8-b137-4e39-a6cc-d5259596bb7d"
+				},
+				{
+					"name": "services",
+					"item": [
+						{
+							"name": "get-all",
+							"id": "01ad7dd9-ca6e-489c-81d6-2c69f1887d21",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base-ip}}:{{web-backend}}/services"
+							},
+							"response": []
+						}
+					],
+					"id": "865c1a1b-051f-4992-802a-3188004b7a1b"
+				},
+				{
+					"name": "tiles",
+					"item": [
+						{
+							"name": "search",
+							"id": "fcfdf8ce-fa80-43cc-ab3f-20d27a8f0498",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-ip}}:{{web-backend}}/tiles?page=0&size=100",
+									"host": [
+										"{{base-ip}}"
+									],
+									"port": "{{web-backend}}",
+									"path": [
+										"tiles"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-by-id",
+							"id": "ea932bda-1bf6-40b3-bef3-eec2fd09cc9c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-ip}}:{{web-backend}}/tiles/:id",
+									"host": [
+										"{{base-ip}}"
+									],
+									"port": "{{web-backend}}",
+									"path": [
+										"tiles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"id": "31878d0a-5dc1-4d42-9984-af4cfee0d9b8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"description\": \"{{$randomLoremText}}\",\r\n    \"images\": [\r\n        \"c1c428cb-04c1-44a0-b1e9-f00a2b1bee54\"\r\n    ],\r\n    \"dimensions\": \"{{$randomLatitude}}, {{$randomLatitude}}\",\r\n    \"type\": \"CERAMIC\",\r\n    \"price\": \"{{$randomPrice}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{web-backend}}/tiles"
+							},
+							"response": []
+						}
+					],
+					"id": "590b803f-e72b-4412-85a4-2a9629e49a77"
+				},
+				{
+					"name": "works",
+					"item": [
+						{
+							"name": "get-all",
+							"id": "20379fa4-8af2-43e2-9407-fb111fcb1c50",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base-ip}}:{{web-backend}}/works"
+							},
+							"response": []
+						}
+					],
+					"id": "eaca4d7d-f61d-44e5-b9fe-e4af86d3cd61"
+				},
+				{
+					"name": "goods",
+					"item": [
+						{
+							"name": "search",
+							"id": "54a73ced-e0c2-41aa-aa49-a2c81163c6fe",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 0.0,\n    \"category\": \"53f2e1a9-892c-4795-a2ff-380f7a2768f8\",\n    \"images\": [],\n    \"brand\": \"OTHER\",\n    \"salePrice\": 0.0,\n    \"discount\": 0.0,\n    \"color\": \"\",\n    \"finish\": \"\",\n    \"material\": \"\",\n    \"usage\": \"\",\n    \"area\": \"\",\n    \"catalog\": {\n        \"id\": \"\",\n        \"name\": \"\",\n        \"type\": \"\"\n    },\n    \"countryOfOrigin\": \"\",\n    \"volume\": \"\",\n    \"availability\": false,\n    \"warranty\": 0.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{web-backend}}/goods"
+							},
+							"response": []
+						}
+					],
+					"id": "b1ada3bf-cb48-4021-ab0c-6bddc0a2864d"
+				}
+			],
+			"id": "0ff2a93c-116b-4110-9986-9780b3666e5e"
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "goods",
+					"item": [
+						{
+							"name": "add",
+							"id": "17aa72ed-e6a0-4fa5-9aa3-287764449f91",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 0.0,\n    \"category\": \"92ba4cad-bf61-4231-936d-7bf5dfeccf0d\",\n    \"images\": [\n        {\n            \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n            \"name\": \"photo.jpg\",\n            \"type\": \"image/jpeg\"\n        }\n    ],\n    \"brand\": \"OTHER\",\n    \"salePrice\": 1000,\n    \"discount\": 10000,\n    \"color\": \"\",\n    \"finish\": \"\",\n    \"material\": \"\",\n    \"usage\": \"\",\n    \"area\": \"\",\n    \"catalog\": {\n        \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n        \"name\": \"photo.jpg\",\n        \"type\": \"image/jpeg\"\n    },\n    \"countryOfOrigin\": \"\",\n    \"volume\": \"123123\",\n    \"availability\": false,\n    \"warranty\": 0.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods"
+							},
+							"response": []
+						},
+						{
+							"name": "search",
+							"id": "6a567380-8b14-4ab1-bd80-1ffcf6dee0a0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods"
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"id": "c8a5a586-68b7-4a4d-80da-0bf27cbe8e49",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 0.0,\n    \"category\": \"dfccb55e-4f19-4509-8d3c-7664929a3c32\",\n    \"images\": [\n        {\n            \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n            \"name\": \"photo.jpg\",\n            \"type\": \"image/jpeg\"\n        }\n    ],\n    \"brand\": \"OTHER\",\n    \"salePrice\": 1000,\n    \"discount\": 10000,\n    \"color\": \"\",\n    \"finish\": \"\",\n    \"material\": \"\",\n    \"usage\": \"\",\n    \"area\": \"\",\n    \"catalog\": {\n        \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n        \"name\": \"photo.jpg\",\n        \"type\": \"image/jpeg\"\n    },\n    \"countryOfOrigin\": \"\",\n    \"volume\": \"123123\",\n    \"availability\": false,\n    \"warranty\": 0.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods"
+							},
+							"response": []
+						},
+						{
+							"name": "import",
+							"id": "d9b1b94c-d765-4a39-9d86-f9fe80ff697b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 0.0,\n    \"category\": \"92ba4cad-bf61-4231-936d-7bf5dfeccf0d\",\n    \"images\": [\n        {\n            \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n            \"name\": \"photo.jpg\",\n            \"type\": \"image/jpeg\"\n        }\n    ],\n    \"brand\": \"OTHER\",\n    \"salePrice\": 1000,\n    \"discount\": 10000,\n    \"color\": \"\",\n    \"finish\": \"\",\n    \"material\": \"\",\n    \"usage\": \"\",\n    \"area\": \"\",\n    \"catalog\": {\n        \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n        \"name\": \"photo.jpg\",\n        \"type\": \"image/jpeg\"\n    },\n    \"countryOfOrigin\": \"\",\n    \"volume\": \"123123\",\n    \"availability\": false,\n    \"warranty\": 0.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods"
+							},
+							"response": []
+						}
+					],
+					"id": "d8f0a3a7-7668-4b2e-aa16-b4900cea59b3"
+				},
+				{
+					"name": "goods_category",
+					"item": [
+						{
+							"name": "add",
+							"id": "9d984050-6072-4b9d-b69c-e86970d9a6bd",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"names\": [\n        {\n            \"text\": \"{{$randomAlphaNumeric}}\",\n            \"langCode\": \"RU\"\n        }\n    ],\n    \"route\": \"{{$randomUrl}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods/categories"
+							},
+							"response": []
+						},
+						{
+							"name": "seatch",
+							"id": "4fed2623-6014-451b-8e8f-9148e861b0c1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"price\": 10,\n  \"category\": \"\",\n  \"images\": [\n    {\n      \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  ],\n  \"manufacturer\": \"\",\n  \"application\": \"\",\n  \"catalog\": {\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"name\": \"string\",\n    \"type\": \"string\"\n  },\n  \"countryOfOrigin\": \"string\",\n  \"titles\": [\n    {\n      \"text\": \"string\",\n      \"langCode\": \"string\"\n    }\n  ],\n  \"descriptions\": [\n    {\n      \"text\": \"string\",\n      \"langCode\": \"string\"\n    }\n  ],\n  \"volume\": \"string\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods/categories"
+							},
+							"response": []
+						}
+					],
+					"id": "71f954a3-a436-424f-94ba-97c07021fc32"
+				},
+				{
+					"name": "goods_brand",
+					"item": [
+						{
+							"name": "add",
+							"id": "e6ecd2cb-abff-4352-9fd4-0836fb229d14",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{$randomJobTitle}}\",\n    \"route\": \"{{$randomUrl}}\",\n    \"countryOfOrigin\": \"{{$randomCountry}}\",\n    \"descriptions\": [\n        {\n            \"text\": \"{{$randomJobDescriptor}}\",\n            \"langCode\": \"RU\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods/brands"
+							},
+							"response": []
+						},
+						{
+							"name": "seatch",
+							"id": "2c5d831b-a29e-46ab-b0da-60ceabfc9ef9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"price\": 10,\n  \"category\": \"\",\n  \"images\": [\n    {\n      \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  ],\n  \"manufacturer\": \"\",\n  \"application\": \"\",\n  \"catalog\": {\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"name\": \"string\",\n    \"type\": \"string\"\n  },\n  \"countryOfOrigin\": \"string\",\n  \"titles\": [\n    {\n      \"text\": \"string\",\n      \"langCode\": \"string\"\n    }\n  ],\n  \"descriptions\": [\n    {\n      \"text\": \"string\",\n      \"langCode\": \"string\"\n    }\n  ],\n  \"volume\": \"string\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods/brands"
+							},
+							"response": []
+						}
+					],
+					"id": "d191fd29-94c4-48b2-bd2e-65776f647da0"
+				},
+				{
+					"name": "files",
+					"item": [
+						{
+							"name": "get-by-id",
+							"id": "c8a4f516-b95e-4a36-8d73-6282d3777f0c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-ip}}:{{web-backend}}/files/:id",
+									"host": [
+										"{{base-ip}}"
+									],
+									"port": "{{web-backend}}",
+									"path": [
+										"files",
+										":id"
+									],
+									"variable": [
+										{
+											"id": "057eb1aa-fe1b-436c-92c5-eb94dd3e0fb2",
+											"key": "id",
+											"value": "0d503c01-eb14-44c8-9267-25d01519495c"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"id": "0e0d27ae-9b74-4638-98e4-e7d610bbaf59",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/harut/Downloads/photo.jpg"
+										}
+									]
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/files"
+							},
+							"response": []
+						},
+						{
+							"name": "get-by-filename",
+							"id": "fbd7e204-a33e-4025-8221-c49548694eb6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-ip}}:{{file-management-backend}}/images?fileName=web/520464249test2.jpg",
+									"host": [
+										"{{base-ip}}"
+									],
+									"port": "{{file-management-backend}}",
+									"path": [
+										"images"
+									],
+									"query": [
+										{
+											"key": "fileName",
+											"value": "web/520464249test2.jpg"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "c8a18fb4-ab37-4bc0-a633-3537fcf142a8"
+				},
+				{
+					"name": "goods-collection",
+					"item": [
+						{
+							"name": "add",
+							"id": "8ad23e04-da0a-4f45-99e0-5634db4272bd",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 0.0,\n    \"category\": \"92ba4cad-bf61-4231-936d-7bf5dfeccf0d\",\n    \"images\": [\n        {\n            \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n            \"name\": \"photo.jpg\",\n            \"type\": \"image/jpeg\"\n        }\n    ],\n    \"brand\": \"OTHER\",\n    \"salePrice\": 1000,\n    \"discount\": 10000,\n    \"color\": \"\",\n    \"finish\": \"\",\n    \"material\": \"\",\n    \"usage\": \"\",\n    \"area\": \"\",\n    \"catalog\": {\n        \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n        \"name\": \"photo.jpg\",\n        \"type\": \"image/jpeg\"\n    },\n    \"countryOfOrigin\": \"\",\n    \"volume\": \"123123\",\n    \"availability\": false,\n    \"warranty\": 0.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods"
+							},
+							"response": []
+						},
+						{
+							"name": "search",
+							"id": "3ee933e1-38f7-4747-89f6-8ec6ac2eafd5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods/collections"
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"id": "a3718d95-6dd8-4a07-abba-45015a4f5a85",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 0.0,\n    \"category\": \"dfccb55e-4f19-4509-8d3c-7664929a3c32\",\n    \"images\": [\n        {\n            \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n            \"name\": \"photo.jpg\",\n            \"type\": \"image/jpeg\"\n        }\n    ],\n    \"brand\": \"OTHER\",\n    \"salePrice\": 1000,\n    \"discount\": 10000,\n    \"color\": \"\",\n    \"finish\": \"\",\n    \"material\": \"\",\n    \"usage\": \"\",\n    \"area\": \"\",\n    \"catalog\": {\n        \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n        \"name\": \"photo.jpg\",\n        \"type\": \"image/jpeg\"\n    },\n    \"countryOfOrigin\": \"\",\n    \"volume\": \"123123\",\n    \"availability\": false,\n    \"warranty\": 0.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods"
+							},
+							"response": []
+						},
+						{
+							"name": "import",
+							"id": "ebeacc4b-d2a8-4bd7-a904-be101dd81510",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 0.0,\n    \"category\": \"92ba4cad-bf61-4231-936d-7bf5dfeccf0d\",\n    \"images\": [\n        {\n            \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n            \"name\": \"photo.jpg\",\n            \"type\": \"image/jpeg\"\n        }\n    ],\n    \"brand\": \"OTHER\",\n    \"salePrice\": 1000,\n    \"discount\": 10000,\n    \"color\": \"\",\n    \"finish\": \"\",\n    \"material\": \"\",\n    \"usage\": \"\",\n    \"area\": \"\",\n    \"catalog\": {\n        \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n        \"name\": \"photo.jpg\",\n        \"type\": \"image/jpeg\"\n    },\n    \"countryOfOrigin\": \"\",\n    \"volume\": \"123123\",\n    \"availability\": false,\n    \"warranty\": 0.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods"
+							},
+							"response": []
+						}
+					],
+					"id": "1e00a41a-c77d-499d-a3dc-781d00305d86"
+				}
+			],
+			"id": "3db86c48-03ce-4c87-a234-cc7b6ce6c5ea"
+		},
+		{
+			"name": "configuration",
+			"item": [
+				{
+					"name": "menu",
+					"item": [
+						{
+							"name": "add",
+							"id": "73c51b00-0f9a-4cf6-ab6a-c9e4133d0b12",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"icon\": \"31\",\n    \"route\": \"2312\",\n    \"isNaveBar\": true,\n    \"name\": [\n        {\n            \"langCode\": \"ru\",\n            \"text\": \"213\"\n        }\n    ],\n    \"children\": []\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{configuration-backend}}/menus"
+							},
+							"response": []
+						},
+						{
+							"name": "search",
+							"id": "699d3c96-263f-4cb0-8674-2b6983551916",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods"
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"id": "b157aa49-5516-41a6-ad31-f3024b366195",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 0.0,\n    \"category\": \"dfccb55e-4f19-4509-8d3c-7664929a3c32\",\n    \"images\": [\n        {\n            \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n            \"name\": \"photo.jpg\",\n            \"type\": \"image/jpeg\"\n        }\n    ],\n    \"brand\": \"OTHER\",\n    \"salePrice\": 1000,\n    \"discount\": 10000,\n    \"color\": \"\",\n    \"finish\": \"\",\n    \"material\": \"\",\n    \"usage\": \"\",\n    \"area\": \"\",\n    \"catalog\": {\n        \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n        \"name\": \"photo.jpg\",\n        \"type\": \"image/jpeg\"\n    },\n    \"countryOfOrigin\": \"\",\n    \"volume\": \"123123\",\n    \"availability\": false,\n    \"warranty\": 0.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods"
+							},
+							"response": []
+						},
+						{
+							"name": "import",
+							"id": "a39abb56-906c-410b-97d5-5269a2411396",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 0.0,\n    \"category\": \"92ba4cad-bf61-4231-936d-7bf5dfeccf0d\",\n    \"images\": [\n        {\n            \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n            \"name\": \"photo.jpg\",\n            \"type\": \"image/jpeg\"\n        }\n    ],\n    \"brand\": \"OTHER\",\n    \"salePrice\": 1000,\n    \"discount\": 10000,\n    \"color\": \"\",\n    \"finish\": \"\",\n    \"material\": \"\",\n    \"usage\": \"\",\n    \"area\": \"\",\n    \"catalog\": {\n        \"id\": \"18ed75c7-30df-4eff-bb8e-b3a9d49821e6\",\n        \"name\": \"photo.jpg\",\n        \"type\": \"image/jpeg\"\n    },\n    \"countryOfOrigin\": \"\",\n    \"volume\": \"123123\",\n    \"availability\": false,\n    \"warranty\": 0.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-ip}}:{{admin-backend}}/goods"
+							},
+							"response": []
+						}
+					],
+					"id": "e818d7df-0d25-4289-85a7-f9f35973ad59"
+				}
+			],
+			"id": "519d1029-9e47-4bb7-a38d-027b500dc751"
+		}
+	]
+}

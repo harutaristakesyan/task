@@ -1,0 +1,11 @@
+server:
+  port: 9010
+  servlet:
+    application-display-name: auth
+
+spring:
+  config:
+    import:
+      - application-discovery.yaml
+  application:
+    name: auth

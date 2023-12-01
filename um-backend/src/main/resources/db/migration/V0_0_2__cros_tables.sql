@@ -1,0 +1,7 @@
+-- create table t_amenities_jobs
+-- (
+--     amenity_id uuid references t_amenities (id) on update cascade on delete cascade,
+--     job_id     uuid references t_jobs (id) on update cascade on delete cascade,
+--
+--     constraint t_amenities_jobs_pk primary key (amenity_id, job_id)
+-- );

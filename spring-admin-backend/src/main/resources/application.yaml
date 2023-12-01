@@ -1,0 +1,24 @@
+server:
+  port: 9020
+  servlet:
+    application-display-name: Spring Admin
+    context-path: /api/spring
+spring:
+  application:
+    name: Spring Admin
+  security:
+    user:
+      name: ${SPRING.ADMIN.USERNAME:Admin}
+      password: ${SPRING.ADMIN.PASSWORD:i4z5ccfPGux7jWB8}
+  profiles:
+    active: local
+eureka:
+  server:
+    eviction-interval-timer-in-ms: 10000
+  dashboard:
+    path: /eureka-dashboard
+  instance:
+    appname: ${spring.application.name}
+    health-check-url-path: /actuator/health
+    instanceId: ${spring.application.name}:${random.value}
+  environment: ${spring.profiles.active}

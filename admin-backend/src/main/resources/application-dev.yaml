@@ -1,0 +1,20 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+    producer:
+      properties:
+        ack: all
+        retries: 0
+        batch-size: 16384
+        linger.ms: 1
+        buffer.memory: 16777216
+        schema.registry.url: http://localhost:9095
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+  datasource:
+    url: jdbc:postgresql://localhost:5432/admin
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+security:
+  enabled: false

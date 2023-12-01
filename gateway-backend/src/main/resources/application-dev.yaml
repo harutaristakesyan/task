@@ -1,0 +1,50 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+      routes:
+        ######################## - admin routes - #######################
+        - id: admin
+          uri: ${ADMIN_API:http://localhost:7000/}
+          predicates:
+            - Path=/api/admin/**
+          metadata:
+            forward-to: true
+#        ######################## - configuration routes - ###############
+#        - id: configuration
+#          uri: http://localhost:6000/
+#          predicates:
+#            - Path=/api/configuration/**
+#        ######################## - i18n routes - ########################
+#        - id: i18n
+#          uri: http://localhost:6010/
+#          predicates:
+#            - Path=/api/i18n/**
+#        ######################## - front routes - #######################
+#        - id: front
+#          uri: http://localhost:7010/
+#          predicates:
+#            - Path=/api/front/**
+#        ######################## - um routes - ##########################
+#        - id: um
+#          uri: http://localhost:7020/
+#          predicates:
+#            - Path=/api/um/**
+#        ######################## - auth routes - ########################
+#        - id: auth
+#          uri: http://localhost:9010/
+#          predicates:
+#            - Path=/api/auth/**
+#        ######################## - spring-admin routes - ################
+#        - id: spring-admin
+#          uri: http://localhost:9020/
+#          predicates:
+#            - Path=/api/spring/admin/**

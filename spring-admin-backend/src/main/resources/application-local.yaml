@@ -1,0 +1,31 @@
+spring:
+  boot:
+    admin:
+      discovery:
+        instances-metadata:
+          user:
+            name: ${spring.security.user.name}
+            password: ${spring.security.user.password}
+      notify:
+        discord:
+          enabled: false
+          webhook-url: https://discord.com/api/webhooks/1067421200550219806/ximUAXSK_G8b6MBG7QjKfF1quFkXd4NlESr5m6cQbBIQnyxMqc7D_ud5f5rzN2hR3MN0
+          username: Spring-Admin
+          message: '**#{instance.registration.name}** change status from *#{lastStatus}* to *#{event.statusInfo.status}*'
+      context-path: admin
+management:
+  endpoint:
+    health:
+      show-details: always
+    loggers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9020/api/spring/eureka
+    fetch-registry: false
+    registerWithEureka: false

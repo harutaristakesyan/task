@@ -1,0 +1,12 @@
+server:
+  port: 7020
+  servlet:
+    context-path: /api/um
+    application-display-name: um
+spring:
+  config:
+    import: application-discovery.yaml
+  application:
+    name: um
+  profiles:
+    active: local

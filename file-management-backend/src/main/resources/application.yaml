@@ -1,0 +1,24 @@
+server:
+  port: 6030
+  servlet:
+    context-path: /api/file-management
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  application:
+    name: file-management
+  profiles:
+    active: local
+    include: discovery
+  flyway:
+    schemas: file-management
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: file-management
+
+file:
+  path:
+    images: /images/

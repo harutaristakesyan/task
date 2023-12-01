@@ -1,0 +1,38 @@
+spring:
+  boot:
+    admin:
+      client:
+        instance:
+          name: ${spring.application.name}
+        url: ${SPRING.ADMIN.ADDRESS:http://localhost:9020}/api/spring/admin
+        username: ${SPRING.ADMIN.USERNAME:Admin}
+        password: ${SPRING.ADMIN.PASSWORD:i4z5ccfPGux7jWB8}
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    appname: ${spring.application.name}
+  client:
+    service-url:
+      defaultZone: ${EUREKA.ADDRESS:http://${spring.boot.admin.client.username}:${spring.boot.admin.client.password}@localhost:9020}/api/spring/eureka
+    register-with-eureka: true
+    fetch-registry: true
+    healthcheck:
+      enabled: true
+    instance-info-replication-interval-seconds: 30
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    loggers:
+      enabled: true
+    env:
+      enabled: true
+      show-values: always
+      post:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'

@@ -1,0 +1,20 @@
+version: '3.9'
+name: admin
+services:
+
+  admin:
+    image: admin:${ADMIN-VERSION}
+    container_name: admin
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "7000:7000"
+    networks:
+      - backend
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin:9020/api/spring/admin
+
+networks:
+  backend:
+    driver: bridge

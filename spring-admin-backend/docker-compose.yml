@@ -1,0 +1,16 @@
+version: '3.9'
+name: spring-admin
+services:
+
+  spring-admin:
+    image: spring-admin:${SPRING-ADMIN-VERSION}
+    container_name: spring-admin
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "9020:9020"
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge

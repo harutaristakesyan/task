@@ -1,0 +1,17 @@
+server:
+  port: 6000
+  servlet:
+    context-path: /api/configuration
+    application-display-name: configuration
+
+spring:
+  config:
+    import:
+      - application-discovery.yaml
+  application:
+    name: configuration
+  profiles:
+    active: local
+mail:
+  from: admin@localhost
+  to: admin@localhost

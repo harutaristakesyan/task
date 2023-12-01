@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/configuration
+    username: postgres
+    password: PassW@RD1
+    driver-class-name: org.postgresql.Driver
+logging:
+  file:
+    name: configuration.log

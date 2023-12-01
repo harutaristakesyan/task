@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/admin
+    username: postgres
+    password: PassW@RD1
+    driver-class-name: org.postgresql.Driver
+logging:
+  file:
+    name: admin.log

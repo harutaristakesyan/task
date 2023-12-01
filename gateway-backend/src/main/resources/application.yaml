@@ -1,0 +1,11 @@
+server:
+  servlet:
+    application-display-name: Gateway
+  port: 9000
+  forward-headers-strategy: native
+spring:
+  profiles:
+    active: dev
+  config:
+    import:
+      - application-security.yaml

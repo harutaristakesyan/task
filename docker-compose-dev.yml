@@ -1,0 +1,182 @@
+version: '3.9'
+name: mk-dev
+services:
+  spring-admin:
+    image: spring-admin:latest
+    container_name: spring-admin
+    build:
+      context: spring-admin-backend
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    networks:
+      - backend
+
+  admin:
+    image: admin-dev:admin-dev
+    container_name: admin-dev
+    depends_on:
+      - spring-admin
+    build:
+      context: admin-backend
+      dockerfile: Dockerfile
+    ports:
+      - "7060:7060"
+    networks:
+      - backend
+    environment:
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin:9090/api/mk/spring/admin
+
+  auth:
+    image: auth-dev:auth-dev
+    container_name: auth
+    depends_on:
+      - spring-admin
+    build:
+      context: auth-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - backend
+
+  web:
+    image: web-dev:web-dev
+    container_name: web-dev
+    depends_on:
+      - spring-admin
+    build:
+      context: web-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8050:8050"
+    networks:
+      - backend
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/web
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin:9090/api/mk/spring/admin
+
+  um:
+    image: um-dev:um-dev
+    container_name: um-dev
+    depends_on:
+      - spring-admin
+    build:
+      context: um-backend
+      dockerfile: Dockerfile
+    ports:
+      - "7050:7050"
+    networks:
+      - backend
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/um
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin:9090/api/mk/spring/admin
+
+  gateway:
+    image: gateway-dev:gateway-dev
+    container_name: gateway-dev
+    depends_on:
+      - spring-admin
+      - admin
+      - auth
+      - web
+      - um
+    build:
+      context: gateway-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+
+  zookeeper-1:
+    container_name: zookeeper-1
+    image: zookeeper:latest
+    ports:
+      - "2181:2181"
+    networks:
+      - backend
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+
+  kafka-1:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka-1
+    depends_on:
+      - zookeeper-1
+    ports:
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092, PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT, PLAINTEXT_HOST:PLAINTEXT
+
+    networks:
+      - backend
+
+  kafka-manager:
+    image: provectuslabs/kafka-ui:latest
+    restart: always
+    container_name: kafka-manager
+    depends_on:
+      - kafka-1
+      - schema-registry-1
+    ports:
+      - "9292:9292"
+    environment:
+      SERVER_PORT: 9292
+      AUTH_TYPE: "LOGIN_FORM"
+      SPRING_SECURITY_USER_NAME: admin
+      SPRING_SECURITY_USER_PASSWORD: pass
+      SERVER_SERVLET_CONTEXT_PATH: /kafka-ui
+
+      KAFKA_CLUSTERS_0_NAME: kafka-1
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper-1:2181
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:9092
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry-1:9095
+
+    networks:
+      - backend
+
+  schema-registry-1:
+    image: confluentinc/cp-schema-registry:latest
+    ports:
+      - "9095:9095"
+    depends_on:
+      - kafka-1
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry-1
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper-1:2181
+      SCHEMA_REGISTRY_LISTENERS: http://schema-registry-1:9095
+      SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: PLAINTEXT
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-1:9092
+      SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: INFO
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+      SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL: http
+    networks:
+      - backend
+
+  redis-management-center:
+    image: redis/redis-stack:latest
+    container_name: redis-management-center
+    ports:
+      - 6379:6379
+      - "8001:8001"
+    networks:
+      - backend
+  hazelcast-management-center:
+    image: hazelcast/management-center:latest
+    container_name: hazelcast-management-center
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

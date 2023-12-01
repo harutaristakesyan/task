@@ -1,0 +1,74 @@
+# Java Gradle CircleCI 2.0 configuration file
+# See: https://circleci.com/docs/2.0/language-java/
+version: 2.1
+orbs:
+  qodana: jetbrains/qodana@2023.2.1
+jobs:
+  code-quality:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - qodana/scan
+  build:
+    machine:
+      image: ubuntu-2204:2023.04.2
+    resource_class: medium
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - gradle-shared-cache-{{ checksum "build.gradle" }}
+      - run:
+          name: Build
+          command: ./gradlew bootJar -x test ;
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-shared-cache-{{ checksum "build.gradle" }}
+      - persist_to_workspace:
+          root: build/libs
+          paths:
+            - admin-backend*.jar
+  deploy:
+    docker:
+      - image: cimg/base:2022.06
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+      - attach_workspace:
+          at: build/libs
+      - run:
+          name: Publish docker image
+          command: |
+            docker build . --tag $DOCKER_REGISTRY/admin-backend
+            echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+            docker push $DOCKER_REGISTRY/admin-backend
+      - run:
+          name: Ping Portainer
+          command: curl --insecure -X POST https://www.portainer.mkrezka.ru/api/webhooks/47d37e4d-fe76-4789-b798-ece8b51742a1
+workflows:
+  admin-backend-wf:
+    jobs:
+      - code-quality:
+          context: qodana
+      - build
+      - hold:
+          type: approval
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          requires:
+            - hold
+          filters:
+            branches:
+              only:
+                - master

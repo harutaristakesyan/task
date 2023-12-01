@@ -1,0 +1,17 @@
+version: '3.9'
+name: i18n
+services:
+
+  i18:
+    image: i18n:${I18N-VERSION}
+    container_name: i18n
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "6010:6010"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

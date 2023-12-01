@@ -1,0 +1,32 @@
+security:
+  enabled: ${SECURITY_ENABLED:true}
+  api-prefixes: ${SECURITY_API_PREFIXES:/api/admin/**}
+  public-paths:
+    - /swagger-ui.html
+    - /actuator/health/**
+    - /actuator/info
+    - /api/web/**
+    - /api/file-manager/**
+
+auth:
+  server: https://www.oauth.mkrezka.ru
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          gateway:
+            provider: spring
+            client-id: ${SECURITY_OAUTH2_CLIENT_ID:mk-client}
+            client-secret: ${SECURITY_OAUTH2_CLIENT_SECRET:vrIWa9HmkC0nGW8ad0nSexOlrEwlQyav}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid
+            client-name: Mk Client
+        provider:
+          spring:
+            issuer-uri: ${auth.server}
+      resource-server:
+        jwt:
+          jwk-set-uri: ${auth.server}/oauth2/jwks

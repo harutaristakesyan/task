@@ -1,0 +1,17 @@
+version: '3.9'
+name: um
+services:
+
+  um:
+    image: um:${UM-VERSION}
+    container_name: um
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "7020:7020"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

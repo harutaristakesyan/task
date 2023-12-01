@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.graalvm.buildtools.native' version '0.9.18'
+}
+
+group = 'com'
+version = '0.0.1'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('mapStructVersion', "1.5.4.Final")
+    set('springBootAdminVersion', "3.0.2")
+}
+
+
+dependencies {
+    /* Spring */
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "de.codecentric:spring-boot-admin-starter-client"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    /* Database */
+
+
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+    implementation "org.mapstruct:mapstruct:${mapStructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+    }
+}
+
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}

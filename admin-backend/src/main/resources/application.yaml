@@ -1,0 +1,24 @@
+server:
+  port: 7000
+  servlet:
+    context-path: /api/admin
+    application-display-name: admin
+
+spring:
+  config:
+    import:
+      - application-security.yaml
+      - application-discovery.yaml
+  application:
+    name: admin
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 10MB
+mail:
+  from: admin@localhost
+  to: admin@localhost
+external:
+  api:
+    file-management: http://localhost:6030/api/file-management/images/

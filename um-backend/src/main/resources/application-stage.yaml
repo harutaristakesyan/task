@@ -1,0 +1,15 @@
+spring:
+  flyway:
+    schemas: um
+  datasource:
+    url: jdbc:postgresql://localhost:5432/um
+    username: postgres
+    password: PassW@RD1
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        default_schema: um
+logging:
+  file:
+    name: um.log

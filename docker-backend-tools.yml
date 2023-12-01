@@ -1,0 +1,45 @@
+version: '3.9'
+services:
+  configuration-backend:
+    image: mkrezka/configuration-backend:latest
+    container_name: configuration-backend
+    ports:
+      - "6000:6000"
+    networks:
+      - mk
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_SERVER}
+      SPRING_BOOT_ADMIN_CLIENT_URL: ${SPRING_BOOT_ADMIN_URL}
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: ${EUREKA_CLIENT_URL}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_DATASOURCE_URL: ${POSTGRES_URL}/configuration
+  notification-backend:
+    image: mkrezka/notification-backend:latest
+    container_name: notification-backend
+    ports:
+      - "6020:6020"
+    networks:
+      - mk
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES}
+      SPRING_BOOT_ADMIN_CLIENT_URL: ${SPRING_BOOT_ADMIN_URL}
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: ${EUREKA_CLIENT_URL}
+  file-management-backend:
+    image: mkrezka/file-management-backend:latest
+    container_name: file-management-backend
+    ports:
+      - "6030:6030"
+    networks:
+      - mk
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES}
+      SPRING_BOOT_ADMIN_CLIENT_URL: ${SPRING_BOOT_ADMIN_URL}
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: ${EUREKA_CLIENT_URL}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_DATASOURCE_URL: ${POSTGRES_URL}/file-management
+networks:
+  mk:
+    external: true

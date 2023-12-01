@@ -1,0 +1,19 @@
+version: '3.9'
+name: notification
+services:
+
+  gateway:
+    image: notification:${NOTIFICATION-VERSION}
+    container_name: notification
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "6020:6020"
+    networks:
+      - backend
+    environment:
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://spring-admin:9020/api/spring/admin
+
+networks:
+  backend:
+    driver: bridge

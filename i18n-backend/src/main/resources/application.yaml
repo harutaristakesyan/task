@@ -1,0 +1,30 @@
+server:
+  port: 6010
+  servlet:
+    context-path: /api/i18n
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:9020/api/spring/admin
+        username: ${SPRING.ADMIN.USERNAME:Admin}
+        password: ${SPRING.ADMIN.PASSWORD:i4z5ccfPGux7jWB8}
+  application:
+    name: I18n
+  profiles:
+    active: dev
+  flyway:
+    schemas: i18n
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: i18n
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'

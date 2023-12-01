@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      uri:
+      database: i18n
+      password:
+      username:
+logging:
+  file:
+    name: web.log
+eureka:
+  client:
+    service-url:
+      defaultZone: http://Admin:i4z5ccfPGux7jWB8@31.172.76.230:9020/api/spring/eureka/
+external:
+  api:
+    file-management: http://31.172.76.230:6030/api/file-management/images/

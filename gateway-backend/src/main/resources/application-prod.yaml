@@ -1,0 +1,60 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: ${ALLOWED_ORIGINS:https://www.admin.mkrezka.ru,https://www.oauth.mkrezka.ru,http://localhost:4200}
+            allowCredentials: true
+            allowedHeaders: "Authorization, Cache-Control, X-Requested-With, Accept, Origin, Referer, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Request-Private-Network, Content-Type, X-XSRF-TOKEN"
+            allowedMethods: "OPTIONS, GET, POST, PUT, DELETE, HEAD, PATCH"
+            maxAge: 3600
+        add-to-simple-url-handler-mapping: true
+      routes:
+        ######################## - admin routes - #######################
+        - id: admin
+          uri: ${ADMIN_API:http://admin-backend:7000}
+          predicates:
+            - Path=/api/admin/**
+          metadata:
+            forward-to: true
+        - id: web
+          uri: ${WEB_API:http://web-backend:7010}
+          predicates:
+            - Path=/api/web/**
+          metadata:
+            forward-to: true
+        ######################## - configuration routes - ###############
+        - id: configuration
+          uri: ${WEB_API:http://configuration-backend:6000}
+          predicates:
+            - Path=/api/configuration/**
+          metadata:
+            forward-to: true
+#        ######################## - i18n routes - ########################
+#        - id: i18n
+#          uri: http://localhost:6010/
+#          predicates:
+#            - Path=/api/i18n/**
+#        ######################## - front routes - #######################
+#        - id: front
+#          uri: http://localhost:7010/
+#          predicates:
+#            - Path=/api/front/**
+#        ######################## - um routes - ##########################
+#        - id: um
+#          uri: http://localhost:7020/
+#          predicates:
+#            - Path=/api/um/**
+#        ######################## - auth routes - ########################
+#        - id: auth
+#          uri: http://localhost:9010/
+#          predicates:
+#            - Path=/api/auth/**
+#        ######################## - spring-admin routes - ################
+#        - id: spring-admin
+#          uri: http://localhost:9020/
+#          predicates:
+#            - Path=/api/spring/admin/**
+security:
+  enabled: false

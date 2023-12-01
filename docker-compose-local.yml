@@ -1,0 +1,93 @@
+version: '3.9'
+name: mk-local
+services:
+
+  mk-spring-admin:
+    image: mk-spring-admin:latest
+    container_name: mk-spring-admin
+    build:
+      context: spring-admin-backend
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    networks:
+      - mk-backend
+
+  mk-admin:
+    image: mk-admin:mk-admin-local
+    container_name: mk-admin-local
+    depends_on:
+      - mk-spring-admin
+    build:
+      context: admin-backend
+      dockerfile: Dockerfile
+    ports:
+      - "7060:7060"
+    networks:
+      - mk-backend
+    environment:
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://mk-spring-admin:9090/api/mk/spring/admin
+
+  mk-auth:
+    image: mk-auth:mk-auth-local
+    container_name: mk-auth-local
+    depends_on:
+      - mk-spring-admin
+    build:
+      context: auth-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - mk-backend
+
+  mk-front:
+    image: mk-front:mk-front-local
+    container_name: mk-front-local
+    depends_on:
+      - mk-spring-admin
+    build:
+      context: front-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8050:8050"
+    networks:
+      - mk-backend
+    environment:
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://mk-spring-admin:9090/api/mk/spring/admin
+
+  mk-um:
+    image: mk-um:mk-um-local
+    container_name: mk-um-local
+    depends_on:
+      - mk-spring-admin
+    build:
+      context: um-backend
+      dockerfile: Dockerfile
+    ports:
+      - "7050:7050"
+    networks:
+      - mk-backend
+    environment:
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://mk-spring-admin:9090/api/mk/spring/admin
+
+  mk-gateway:
+    image: mk-gateway:mk-gateway-local
+    container_name: mk-gateway-local
+    depends_on:
+      - mk-spring-admin
+      - mk-admin
+      - mk-auth
+      - mk-front
+      - mk-um
+    build:
+      context: gateway-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - mk-backend
+
+networks:
+  mk-backend:
+    driver: bridge
